@@ -1,0 +1,12 @@
+{
+  "folders": [
+	{
+		"path": "..\\esp-rfid"
+	},
+	{
+		"name": "dave-server",
+		"path": "..\\dave-server"
+	}
+],
+  "settings": {}
+}
