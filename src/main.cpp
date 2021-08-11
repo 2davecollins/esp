@@ -63,22 +63,18 @@ const int ASYNC_PORT = 80;
 AsyncWebServer server(ASYNC_PORT);
 
 String readDHTTemperature()
-{
-
-  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
+{ 
   // Read temperature as Celsius (the default)
   float t = dht.readTemperature();
   // Read temperature as Fahrenheit (isFahrenheit = true)
-  //float t = dht.readTemperature(true);
-  //Check if any reads failed and exit early (to try again).
+  
   if (isnan(t))
   {
     Serial.println("Failed to read from DHT sensor!");
     return "--";
   }
   else
-  {
-    //Serial.println(t);
+  {    
     return String(t);
   }
 }
@@ -86,7 +82,6 @@ String readDHTTemperature()
 
 String readDHTHumidity()
 {
-  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
   float h = dht.readHumidity();
   if (isnan(h))
   {
@@ -95,7 +90,6 @@ String readDHTHumidity()
   }
   else
   {
-    //  Serial.println(h);
     return String(h);
   }
 }
@@ -103,22 +97,13 @@ String readDHTHumidity()
 void mqtt_temp_tx()
 { 
 
- // sprintf(messages, "Temperature %", readDHTTemperature());
-  //Serial.println(messages);
-  //Serial.print(readDHTTemperature().c_str());
-  //Serial.print("mqtt temp");
   client.publish(temperature_topic, readDHTTemperature().c_str());
-  //client.publish(temperature_topic, messages);
+  
 }
 
 void mqtt_humidity_tx()
 {
-  
-  //sprintf(messages, "Humidity %", readDHTHumidity());
-  // Serial.println(messages);
-  // client.publish(humidity_topic, messages);
- // Serial.println(readDHTHumidity().c_str());
-  //Serial.print("mqq_humidity");
+ 
   client.publish(humidity_topic, readDHTHumidity().c_str());
 }
 
@@ -165,7 +150,6 @@ void reconnect()
 void setup()
 {
   // Serial port for debugging purposes
-
   Serial.begin(monitor_speed);
   pinMode(ledPin, OUTPUT);
   dht.begin();
@@ -186,8 +170,7 @@ void setup()
   }
   client.setServer(mqtt_server, MQTT_PORT);
   client.setCallback(callback);
-
-  // Print ESP32 Local IP Address
+ 
   Serial.println(WiFi.localIP());
 
   // Route for root / web page
